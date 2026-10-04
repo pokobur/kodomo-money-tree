@@ -34,6 +34,9 @@ self.addEventListener('activate', (event) => {
 
 // フェッチ: キャッシュファースト、API通信はネットワークファースト
 self.addEventListener('fetch', (event) => {
+  if (!event.request.url.startsWith('http')) return;
+  if (event.request.method !== 'GET') return;
+
   const url = new URL(event.request.url);
 
   // Supabase API / 外部APIはネットワークファースト

@@ -1,6 +1,6 @@
 {
   "name": "こどもマネーツリー",
-  "short_name": "こどもマネーツリー",
+  "short_name": "マネーツリー",
   "description": "おてつだいで コインをかせいで、きを そだてよう！おやこで まなぶ おかねの きょうしつ",
   "start_url": "./",
   "display": "standalone",
