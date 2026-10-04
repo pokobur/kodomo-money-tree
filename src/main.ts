@@ -26,10 +26,18 @@ initApp().catch(err => {
 });
 
 // PWA Service Worker 登録
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(err => {
+if ('serviceWorker' in navigator) {
+  const registerSW = () => {
+    navigator.serviceWorker.register('./sw.js', { scope: './' }).then(reg => {
+      console.log('PWA ServiceWorker registered:', reg.scope);
+    }).catch(err => {
       console.warn('PWA ServiceWorker registration failed:', err);
     });
-  });
+  };
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    registerSW();
+  } else {
+    window.addEventListener('load', registerSW);
+  }
 }

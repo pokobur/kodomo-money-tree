@@ -1,18 +1,20 @@
 // マネーツリー Service Worker
-// キャッシュファースト + ネットワークフォールバック
+// キャッシュファースト + オフラインフォールバック
 
-const CACHE_NAME = 'money-tree-v1';
+const CACHE_NAME = 'money-tree-v2';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './manifest.json',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
 ];
 
-// インストール: 静的アセットをキャッシュ
+// インストール: 静的アセットを安全にキャッシュ
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS);
+    caches.open(CACHE_NAME).then(async (cache) => {
+      await Promise.allSettled(STATIC_ASSETS.map(url => cache.add(url)));
     })
   );
   self.skipWaiting();
@@ -48,20 +50,27 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 静的アセットはキャッシュファースト
+  // 静的アセットはキャッシュファースト + オフラインフォールバック
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;
-      return fetch(event.request).then((response) => {
-        // レスポンスをキャッシュ
-        if (response.status === 200) {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, clone);
-          });
-        }
-        return response;
-      });
+      return fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, clone);
+            });
+          }
+          return response;
+        })
+        .catch(async () => {
+          // オフライン時にナビゲーションリクエストならindex.htmlを返す
+          if (event.request.mode === 'navigate') {
+            return (await caches.match('./')) || (await caches.match('./index.html'));
+          }
+          return cached;
+        });
     })
   );
 });
