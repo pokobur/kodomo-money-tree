@@ -1,0 +1,44 @@
+import{p as _,s as g,i as I,h as T,r as D,u as $,q as H}from"./index-DVKodEt2.js";import{c as M}from"./nav-BNXpAq-h.js";import{s as x}from"./modal-Ds6dQjwb.js";import{s as b}from"./toast-C4kZiukH.js";import{f as N}from"./format-whnyl9xB.js";function R(){const c=document.createElement("div");c.className="screen-container parent-theme",c.style.display="flex",c.style.flexDirection="column",c.style.height="100vh";const p=document.createElement("div");p.style.flexGrow="1",p.style.overflowY="auto",p.style.padding="1rem";const w=document.createElement("h1");w.innerText="こども管理",p.appendChild(w);const m=document.createElement("button");m.innerText="+ こどもを追加",m.className="primary-btn",m.style.minHeight="48px",m.style.width="100%",m.style.marginBottom="1rem",m.onclick=()=>P(),p.appendChild(m);const f=document.createElement("div");p.appendChild(f),c.appendChild(p),c.appendChild(M("PARENT"));const y=()=>{const n=g.getState();if(!n)return;f.innerHTML="";const i=I(),r=new Set(i.deletedChildIds||[]),o=(n.children||[]).filter(t=>!r.has(t.id));o.length===0?f.innerHTML='<p style="text-align: center;">こどもが登録されていません</p>':o.forEach(t=>{const e=document.createElement("div");e.className="card",e.style.display="flex",e.style.alignItems="center",e.style.gap="15px";const s=t.display_name||t.nickname||"こども",l=s[0],d=i.accounts.find(q=>q.child_id===t.id),u=(d==null?void 0:d.spending_balance)??t.spending_balance??0,a=(d==null?void 0:d.savings_balance)??t.savings_balance??0;e.innerHTML=`
+                    <div style="width: 50px; height: 50px; border-radius: 25px; background: #81C784; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; flex-shrink: 0;">
+                        ${l}
+                    </div>
+                    <div style="flex-grow: 1; min-width: 0;">
+                        <h3 style="margin: 0 0 5px 0;">${s}</h3>
+                        <div style="font-size: 0.9em; color: #666;">
+                            使う: ${N(u)} | 貯金: ${N(a)}
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                        <button class="pin-btn" style="min-height: 40px; padding: 0 10px; border-radius: 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; font-weight: bold; font-size: 0.85rem;">PIN変更</button>
+                        <button class="delete-btn" style="min-height: 40px; padding: 0 10px; border-radius: 8px; border: 1px solid #ffcdd2; background: #ffebee; color: #d32f2f; cursor: pointer; font-weight: bold; font-size: 0.85rem;">🗑️ 削除</button>
+                    </div>
+                `;const k=e.querySelector(".pin-btn");k&&(k.onclick=()=>L(t));const E=e.querySelector(".delete-btn");E&&(E.onclick=()=>S(t)),f.appendChild(e)})},P=()=>{const n=document.createElement("div");n.innerHTML=`
+            <h2>こどもを追加</h2>
+            <div id="add-child-error" style="color: #EF5350; margin-bottom: 10px; display: none;"></div>
+            <input type="text" id="child-nickname" placeholder="ニックネーム" style="width: 100%; min-height: 48px; margin-bottom: 10px; padding: 0.5rem; border-radius: 8px; border: 1px solid #ccc;">
+            <input type="password" id="child-pin" placeholder="4桁のPINコード" maxlength="4" style="width: 100%; min-height: 48px; margin-bottom: 10px; padding: 0.5rem; border-radius: 8px; border: 1px solid #ccc;">
+            <input type="password" id="child-pin-confirm" placeholder="PINコード (確認用)" maxlength="4" style="width: 100%; min-height: 48px; margin-bottom: 10px; padding: 0.5rem; border-radius: 8px; border: 1px solid #ccc;">
+        `;const i=document.createElement("button");i.innerText="追加する",i.className="primary-btn",i.style.minHeight="48px",i.style.width="100%",i.style.marginTop="10px";let r=null;i.onclick=async()=>{const o=n.querySelector("#child-nickname"),t=n.querySelector("#child-pin"),e=n.querySelector("#child-pin-confirm"),s=n.querySelector("#add-child-error"),l=o.value.trim(),d=t.value.trim(),u=e.value.trim();if(!l){s.textContent="ニックネームを入力してください",s.style.display="block";return}if(d.length!==4||!/^\d{4}$/.test(d)){s.textContent="PINコードは4桁の半角数字で入力してください",s.style.display="block";return}if(d!==u){s.textContent="PINコードが一致しません",s.style.display="block";return}try{i.disabled=!0,i.textContent="追加中...",s.style.display="none";const a=await _(l,d);if(!a.success)throw new Error(a.error||"作成に失敗しました");b(`${l}を追加しました！`,"success"),r==null||r.close(),await h(),y()}catch(a){s.textContent=a.message||"エラーが発生しました",s.style.display="block",i.disabled=!1,i.textContent="追加する"}},n.appendChild(i),r=x({title:"こどもを追加",content:n})},S=n=>{const i=n.display_name||n.nickname||"こども",r=document.createElement("div");r.innerHTML=`
+            <div style="text-align: center; margin-bottom: 1.25rem;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">⚠️</div>
+                <h3 style="margin: 0 0 0.5rem 0; color: #D32F2F; font-size: 1.2rem;">「${i}」を削除しますか？</h3>
+                <p style="color: #666; font-size: 0.9rem; line-height: 1.5; margin: 0;">
+                    この操作は取り消せません。<br>
+                    ${i}の口座残高、お手伝いの履歴、ほしい物リストなどのすべてのデータが削除されます。
+                </p>
+            </div>
+            <div id="delete-child-error" style="color: #EF5350; margin-bottom: 10px; display: none; text-align: center;"></div>
+            <div style="display: flex; gap: 10px; margin-top: 1rem;">
+                <button id="cancel-delete-btn" style="flex: 1; min-height: 46px; border: 1px solid #ccc; background: #f5f5f5; border-radius: 10px; font-weight: bold; cursor: pointer;">
+                    キャンセル
+                </button>
+                <button id="confirm-delete-btn" style="flex: 1; min-height: 46px; border: none; background: #D32F2F; color: white; border-radius: 10px; font-weight: bold; cursor: pointer;">
+                    削除する
+                </button>
+            </div>
+        `;let o=null;const t=r.querySelector("#cancel-delete-btn");t.onclick=()=>o==null?void 0:o.close();const e=r.querySelector("#confirm-delete-btn");e.onclick=async()=>{const s=r.querySelector("#delete-child-error");try{e.disabled=!0,e.textContent="削除中...",t.disabled=!0;const l=await H(n.id);if(!l.success)throw new Error(l.error||"削除に失敗しました");b(`「${i}」を削除しました`,"success"),o==null||o.close(),await h(),y()}catch(l){s.textContent=l.message||"エラーが発生しました",s.style.display="block",e.disabled=!1,e.textContent="削除する",t.disabled=!1}},o=x({title:"こどもの削除",content:r})},L=n=>{const i=n.display_name||n.nickname||"こども",r=document.createElement("div");r.innerHTML=`
+            <h3 style="margin-top: 0;">${i}のPIN変更</h3>
+            <div id="pin-change-error" style="color: #EF5350; margin-bottom: 10px; display: none;"></div>
+            <input type="password" id="new-pin-input" placeholder="新しい4桁のPIN" maxlength="4" style="width: 100%; min-height: 48px; margin-bottom: 10px; padding: 0.5rem; border-radius: 8px; border: 1px solid #ccc; font-size: 1.1rem;">
+            <input type="password" id="confirm-pin-input" placeholder="確認のためもう一度入力" maxlength="4" style="width: 100%; min-height: 48px; margin-bottom: 15px; padding: 0.5rem; border-radius: 8px; border: 1px solid #ccc; font-size: 1.1rem;">
+        `;let o=null;const t=document.createElement("button");t.innerText="変更する",t.className="primary-btn",t.style.minHeight="48px",t.style.width="100%",t.onclick=async()=>{const e=r.querySelector("#new-pin-input"),s=r.querySelector("#confirm-pin-input"),l=r.querySelector("#pin-change-error"),d=e.value.trim(),u=s.value.trim();if(d.length!==4||!/^\d{4}$/.test(d)){l.textContent="PINコードは4桁の数字を入力してください",l.style.display="block";return}if(d!==u){l.textContent="PINコードが一致しません",l.style.display="block";return}try{t.disabled=!0,t.textContent="変更中...";const a=await $(n.id,d);if(!a.success)throw new Error(a.error||"PIN変更に失敗しました");b(`${i}のPINを変更しました`,"success"),o==null||o.close()}catch(a){l.textContent=a.message||"エラーが発生しました",l.style.display="block",t.disabled=!1,t.textContent="変更する"}},r.appendChild(t),o=x({title:"PIN変更",content:r})};g.onAny(y),y();const h=async()=>{const n=g.get("family");if(n){const i=I(),r=new Set(i.deletedChildIds||[]);let o=[];try{const{data:e}=await T.from("users").select("*").eq("family_id",n.id).eq("role","CHILD");e&&(o=e.filter(s=>!r.has(s.id)))}catch(e){console.warn("refreshChildren (Supabase) error:",e)}i.users.filter(e=>e.family_id===n.id&&e.role==="CHILD"&&!r.has(e.id)).forEach(e=>{o.some(s=>s.id===e.id)||o.push(e)}),g.set("children",o)}};h();const v=n=>{n.key==="moneytree_data"&&(h(),y())},C=()=>{h(),y()};return window.addEventListener("storage",v),window.addEventListener("moneytree_local_change",C),window.addEventListener("focus",h),D.onCleanup(()=>{window.removeEventListener("storage",v),window.removeEventListener("moneytree_local_change",C),window.removeEventListener("focus",h)}),c}export{R as createChildManage};

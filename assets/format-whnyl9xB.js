@@ -1,0 +1,1 @@
+const s=["日","月","火","水","木","金","土"];function r(t){return`${(Number.isFinite(t)?Math.round(t):0).toLocaleString("ja-JP")} 🪙`}function i(t){const n=new Date(t);if(isNaN(n.getTime()))return t;const e=n.getMonth()+1,o=n.getDate(),a=s[n.getDay()];return`${e}月${o}日（${a}）`}export{i as a,r as f};

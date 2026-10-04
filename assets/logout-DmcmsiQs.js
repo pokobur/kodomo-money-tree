@@ -1,0 +1,21 @@
+import{s as x,e as w,m as y,r as m}from"./index-DVKodEt2.js";import{c as E}from"./nav-BNXpAq-h.js";import{s as f}from"./toast-C4kZiukH.js";function k(){const l=document.createElement("div");l.className="screen-container child-theme child-logout-container",l.style.display="flex",l.style.flexDirection="column",l.style.minHeight="100vh",l.style.paddingBottom="5.5rem",l.style.overflowY="auto";const t=document.createElement("div");t.className="child-logout-screen",t.style.padding="1.5rem 1rem",t.style.display="flex",t.style.flexDirection="column",t.style.alignItems="center",t.style.flexGrow="1";const s=x.getState(),a=s==null?void 0:s.currentUser,d=s==null?void 0:s.account,p=(d==null?void 0:d.savings_balance)||0,h=(d==null?void 0:d.spending_balance)||0,g=w(p),u=(a==null?void 0:a.display_name)||"おともだち",b=(a==null?void 0:a.avatar_url)||"🧒",c=document.createElement("h1");c.innerText="おわる（ログアウト）🚪",c.style.fontSize="1.75rem",c.style.color="#2E7D32",c.style.textAlign="center",c.style.margin="0.5rem 0 1rem",t.appendChild(c);const e=document.createElement("div");e.className="card child-logout-card",e.style.width="100%",e.style.maxWidth="420px",e.style.textAlign="center",e.style.background="rgba(255, 255, 255, 0.95)",e.style.borderRadius="24px",e.style.padding="1.5rem 1rem",e.style.marginBottom="1.25rem",e.style.boxShadow="0 6px 20px rgba(76, 175, 80, 0.12)",e.innerHTML=`
+    <div style="font-size: 3.5rem; margin-bottom: 0.5rem; line-height: 1;">${b}</div>
+    <h2 style="font-size: 1.4rem; color: #2E7D32; margin-bottom: 0.25rem;">${u}</h2>
+    <p style="color: #666; font-size: 0.95rem; font-weight: 700; margin-bottom: 1.25rem;">きょうも たくさん がんばったね！🌟</p>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+      <div style="background: rgba(255, 112, 67, 0.08); border-left: 3px solid #FF7043; padding: 0.75rem; border-radius: 12px; text-align: center;">
+        <div style="font-size: 0.8rem; font-weight: 700; color: #666;">💰 つかえる</div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #FF7043;">${h.toLocaleString()} コイン</div>
+      </div>
+      <div style="background: rgba(102, 187, 106, 0.08); border-left: 3px solid #66BB6A; padding: 0.75rem; border-radius: 12px; text-align: center;">
+        <div style="font-size: 0.8rem; font-weight: 700; color: #666;">🌱 ためた</div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #2E7D32;">${p.toLocaleString()} コイン</div>
+      </div>
+    </div>
+    
+    <div style="background: #E8F5E9; padding: 0.6rem 1rem; border-radius: 16px; display: inline-flex; align-items: center; gap: 0.5rem;">
+      <span style="font-size: 1.2rem;">🌳</span>
+      <span style="font-weight: 800; color: #2E7D32; font-size: 0.9rem;">き の レベル: Lv.${g.level} ${g.name}</span>
+    </div>
+  `,t.appendChild(e);const i=document.createElement("div");i.style.width="100%",i.style.maxWidth="420px",i.style.display="flex",i.style.flexDirection="column",i.style.gap="0.75rem";const n=document.createElement("button");n.className="btn",n.style.background="linear-gradient(135deg, #FF7043, #EF5350)",n.style.color="#fff",n.style.fontSize="1.05rem",n.style.padding="0.9rem 1.5rem",n.style.borderRadius="9999px",n.style.boxShadow="0 4px 14px rgba(239, 83, 80, 0.3)",n.innerHTML="<span>🚪 おわる（ログアウトする）</span>",n.onclick=async()=>{try{await y(),f("またあそぼうね！バイバイ👋","success"),m.navigate("/")}catch{f("ログアウトに しっぱいしました","error")}},i.appendChild(n);const r=document.createElement("button");r.className="btn",r.style.background="#FFFFFF",r.style.color="#2E7D32",r.style.border="2px solid #81C784",r.style.fontSize="0.95rem",r.style.padding="0.8rem 1.5rem",r.style.borderRadius="9999px",r.innerHTML="<span>🔄 べつの こども に きりかえる</span>",r.onclick=async()=>{try{await y(),m.navigate("/child-login")}catch{m.navigate("/child-login")}},i.appendChild(r);const o=document.createElement("button");return o.className="btn",o.style.background="linear-gradient(135deg, #81C784, #4CAF50)",o.style.color="#fff",o.style.fontSize="0.95rem",o.style.padding="0.8rem 1.5rem",o.style.borderRadius="9999px",o.style.boxShadow="0 4px 12px rgba(76, 175, 80, 0.25)",o.innerHTML="<span>🏠 まだ あそぶ（ホームへもどる）</span>",o.onclick=()=>{m.navigate("/child/home")},i.appendChild(o),t.appendChild(i),l.appendChild(t),l.appendChild(E("CHILD")),l}export{k as createChildLogout};
